@@ -27,7 +27,7 @@ class InputTodo extends Component {
             value={this.state.todo} 
             onChange={this.handleChange}
             ref={(el) => {this.element = el}} />
-          <input type="submit" value="submit"/>
+          <input type="submit" value="등록"/>
         </form>
     );
   }

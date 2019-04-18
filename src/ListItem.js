@@ -3,11 +3,14 @@ import ButtonArea from './ButtonArea';
 
 class ListItem extends Component {
   render() {
+    const {value, itemId, onRemove, onUpdate} = this.props;
+
     return (
       <li>
-        {this.props.value}
-        <ButtonArea itemId={this.props.itemId}
-          onRemove={this.props.onRemove} />
+        {value}
+        <ButtonArea itemId={itemId}
+          onRemove={onRemove}
+          onUpdate={onUpdate} />
       </li>
     );
   }

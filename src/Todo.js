@@ -3,7 +3,7 @@ import InputTodo from './InputTodo';
 import TodoList from './TodoList';
 
 class Todo extends Component {
-  key = 0; // key를 이렇게 하는 방법밖에 없는걸까???
+  key = 0; // 유니크한 id???
 
   constructor(props) {
     super(props);
@@ -21,13 +21,21 @@ class Todo extends Component {
       todos : resultTodo
     });
   }
+  handleUpdate = (id, updateTodo) => {
+    const foundId = this.state.todos.findIndex(i => i.id === id);
+    this.state.todos[foundId].text = updateTodo;
+    this.setState({
+      // 로 변경
+    });
+  }
   
   render() {
     return (
       <div>
         <InputTodo onSubmit={this.handleSubmit} />
         <TodoList value={this.state.todos}
-          onRemove={this.handleRemove} />
+          onRemove={this.handleRemove}
+          onUpdate={this.handleUpdate} />
       </div>
     );
   }
