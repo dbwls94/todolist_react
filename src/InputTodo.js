@@ -4,16 +4,32 @@ class InputTodo extends Component {
   constructor(props) {
     super(props);
     this.state = { todo : '' };
+    this.element = null
   }
+  static getDerivedStateFromProps(props, state) {
+    console.log('InputTodo getDerivedStateFromProps, props : ', props, ' state : ', state);
+    return null;
+  }
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log('InputTodo shouldComponentUpdate, nextProps : ', nextProps, ' nextState : ', nextState, ' this.state : ', this.state);
+    return true;
+  }
+  bindRef = (el) => {this.element = el}
+
   handleChange = (e) => {
     this.setState({
       todo : e.target.value
     });
   }
+
+  handleKeyDown = (e) => {
+    if (e.keyCode === 13) {
+      this.handleSubmit(e)
+    }
+  }
+
   handleSubmit = (e) => {
-    this.props.onSubmit(this.element.value);
-    e.preventDefault();
-    //this.element.value = ''; //-> 이렇게는 안되나???
+    this.props.onSubmit(this.state.todo);
     this.setState({
       todo : ''
     });
@@ -21,15 +37,16 @@ class InputTodo extends Component {
   }
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-          <input type="text" 
-            placeholder="input todo..." 
-            value={this.state.todo} 
-            onChange={this.handleChange}
-            ref={(el) => {this.element = el}} />
-          <input type="submit" value="등록"/>
-        </form>
-    );
+      <>
+      <input type="text" 
+        placeholder="input todo..." 
+        value={this.state.todo}
+        onKeyDown={this.handleKeyDown}
+        onChange={this.handleChange}
+        ref={this.bindRef} />
+      <button type="button" onClick={this.handleSubmit}>등록</button>
+      </>
+    )
   }
 }
 
